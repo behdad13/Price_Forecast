@@ -2,7 +2,7 @@ import joblib
 import pandas as pd
 import os
 import argparse
-from model_trainer import prepare_and_scale_data
+from model_trainer import PrepareScaleData
 from data_prep import DataProcessing
 
 def LoadModel(model_path, scaler_y_path):
@@ -54,7 +54,7 @@ def ModelTest(best_model, scaler_y, X_test, y_test):
 
 def main(market_name):
     # Prepare and scale data
-    _, X_test, _, y_test, _, _ = prepare_and_scale_data(DataProcessing, market_name, 12)
+    _, X_test, _, y_test, _, _ = PrepareScaleData(DataProcessing, market_name, 12)
 
     # Load model and scaler
     model_path = f'model_artifacts/best_model_{market_name}.pkl'
