@@ -21,6 +21,7 @@ To run each component of the project, execute the following command:
 2. model trainer: It runs the model and save the scaler and best model. It includes the HPO and model selection.
 
 `python -m model_trainer <market_name>` like `python -m model_trainer nyiso`
+
 ----
 
 3. model test runner: It loads the best model and scaler and runs the forecast on the test set.
