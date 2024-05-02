@@ -1,7 +1,6 @@
 import pandas as pd
 import xgboost as xgb
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import Ridge, Lasso
 from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
 from sklearn.preprocessing import StandardScaler
 import argparse
@@ -69,8 +68,6 @@ def FindBestModel(X_train, y_train):
     # Define the models, including RF, XGB, and Lasso, and Ridge
     xgb_model = xgb.XGBRegressor(objective='reg:squarederror')
     rf_model = RandomForestRegressor()
-    ridge_model = Ridge()
-    lasso_model = Lasso()
 
     # Create a pipeline for the GridSearchCV
     pipeline = Pipeline([('model', xgb_model)])
@@ -78,20 +75,14 @@ def FindBestModel(X_train, y_train):
     # Create a space
     param_grid = [{
         'model': [xgb_model],
-        'model__max_depth': [3],
-        'model__learning_rate': [0.1],
-        'model__n_estimators': [100, 200],
+        'model__max_depth': [3, 4, 5],
+        'model__learning_rate': [0.1, 0.05],
+        'model__n_estimators': [100, 200, 300],
         'model__subsample': [0.8, 0.9, 1.0]
     }, {
         'model': [rf_model],
         'model__max_depth': [3, None],
-        'model__n_estimators': [100, 200]
-    }, {
-        'model': [ridge_model],
-        'model__alpha': [0.1, 1, 10]
-    }, {
-        'model': [lasso_model],
-        'model__alpha': [0.1, 1, 10] 
+        'model__n_estimators': [100, 200, 300]
     }]
 
     # Grid search with 5-fold time-series cross-validation
